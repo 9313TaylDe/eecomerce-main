@@ -5,20 +5,17 @@ import { useForm } from "react-hook-form";
 import { Context } from "./NewAuthentication";
 
 const LoginPage = () => {
-  const navegar = useNavigate();
   const {
     Login,
     Logout,
     NewAccount,
     Logado,
-    setLogado,
     email,
     senha,
     setEmail,
     setSenha,
   } = useContext(Context);
   const HandleLogin = (e) => {
-    e.preventDefault();
     Login(e);
     Logado(true);
   };
@@ -26,9 +23,8 @@ const LoginPage = () => {
 
   const HandleLogout = () => {
     Logout();
-    setLogado(false);
+    Logado(false);
   };
-
   const [flip, setFlipped] = useState(false);
 
   const Flipeed = (e) => {
@@ -45,7 +41,6 @@ const LoginPage = () => {
         >
           {!flip ? "Cadastre-se" : "Login"}
         </button>
-        <button onClick={HandleLogout}>Logout</button>
         <div
           className={`flex flex-wrap [transform-style:preserve-3d] transition-transform w-[480px] h-[450px] rounded-xl shadow-xl relative duration-700 ${
             flip ? "[transform:rotateY(180deg)] " : ""

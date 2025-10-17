@@ -14,7 +14,8 @@ const NewAutentication = ({ children }) => {
     const autenticado = localStorage.getItem("auth") === "true";
     setLogado(autenticado);
     setCarregando(false);
-  });
+  }, []);
+  // const { register, handleSubmit } = useForm();
 
   const Login = async () => {
     if (!email || !senha) {
@@ -31,7 +32,7 @@ const NewAutentication = ({ children }) => {
       const data = await res.json();
 
       if (data.success) {
-        localStorage.setItem("auth", "true");
+        Login({ userEmai: email, userSenha: senha });
         setLogado(true);
         navegar("/home");
       } else {
@@ -70,20 +71,13 @@ const NewAutentication = ({ children }) => {
       alert("Erro ao conectar com o servidor");
     }
   };
+
   const Logout = async () => {
-    try {
-      const res = await fetch("http://127.0.0.1:5000/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-    } finally {
-      setLogado(false);
-      setEmail("");
-      setSenha("");
-      localStorage.removeItem("auth");
-      alert("SAindo");
-      navegar("/");
-    }
+    setEmail("");
+    setSenha("");
+    setLogado(false);
+    alert("Saindo");
+    localStorage.removeItem("auth");
   };
 
   return (
