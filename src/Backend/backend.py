@@ -15,15 +15,16 @@ def hello():
     return jsonify({"message": "API rodando!"})
 
 @app.route("/login", methods=["POST"])
-def login():
+
+def Login():
     dados = request.json
     email = dados.get("email")
     senha = dados.get("senha")
-
-    if email in usuarios and usuarios[email] == senha:
-        return jsonify({"success": True, "email": email})
+    if email in usuarios and senha in usuarios or senha != "" and email != "":
+            return jsonify({"success":True,"email": email})
     else:
-        return jsonify({"success": False, "message": "Email ou senha inválidos"}), 401
+            return jsonify({"success": False, "erro": "email ou senha inválidos"}),401
+
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro():

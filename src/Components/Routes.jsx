@@ -20,7 +20,7 @@ const Rout = () => {
   return (
     <Routes>
       <>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastre-se" element={<LoginPage />} />
 
         <Route

@@ -26,14 +26,15 @@ const NewAutentication = ({ children }) => {
       const res = await fetch("http://127.0.0.1:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, senha: senha }),
+        body: JSON.stringify({ mail: email, senha: senha }),
       });
 
       const data = await res.json();
 
       if (data.success) {
-        Login({ userEmai: email, userSenha: senha });
+        localStorage.setItem("auth", "true");
         setLogado(true);
+        alert("Login bem sucedido");
         navegar("/home");
       } else {
         alert(data.message);
