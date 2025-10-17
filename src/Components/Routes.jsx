@@ -8,33 +8,7 @@ import NotFound from "./PageNotFound";
 import RoutesProtected from "./RoutesProtected";
 
 const Rout = () => {
-  const navigate = useNavigate();
   const { Login, Logado, carregando } = useContext(AuthContext);
-
-  const [authentic, setAuthentic] = useState(
-    localStorage.getItem("authentic") === "true"
-  );
-
-  const handleLogin = () => {
-    localStorage.setItem("authentic", "true");
-    Login(true);
-    setAuthentic(true);
-    navigate("/home");
-  };
-
-  const handleNewAccout = () => {
-    localStorage.setItem("authentic", "true");
-    Login(true);
-    setAuthentic(true);
-    navigate("/home");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("authentic");
-    setAuthentic(false);
-    Login(false);
-    navigate("/");
-  };
 
   if (carregando) {
     return (

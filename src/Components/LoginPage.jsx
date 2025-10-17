@@ -2,38 +2,34 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./Authentication";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Context } from "./NewAuthentication";
 
 const LoginPage = () => {
-  const [novoEmailLogin, setNovoEmailLogin] = useState("");
-  const [novaSenhaLogin, setNovaSenhaLogin] = useState("");
-  const [novoEmailCadastro, setNovoEmailCadastro] = useState("");
-  const [novaSenhaCadastro, setNovaSenhaCadastro] = useState("");
-  const [girar, setGirar] = useState(false);
-  const [flip, setFlipped] = useState(false);
-  const [carregando, setCarregando] = useState(true);
   const navegar = useNavigate();
-  // const { register, handleSubmit } = useForm();
-  const { Login, email, senha, setLogado } = useContext(AuthContext);
+  const {
+    Login,
+    Logout,
+    NewAccount,
+    Logado,
+    setLogado,
+    email,
+    senha,
+    setEmail,
+    setSenha,
+  } = useContext(Context);
+  const HandleLogin = (e) => {
+    e.preventDefault();
+    Login(e);
+    Logado(true);
+  };
+  const HandleNewAccount = () => [NewAccount()];
 
-  const handleLogin = (data) => {
-    const { email, password } = data;
-    if (novaSenhaLogin && novoEmailLogin) {
-      Login(novoEmailLogin, novaSenhaLogin);
-      setLogado(true);
-      navegar("/home");
-    } else {
-      alert("Preencha o email e senha");
-    }
+  const HandleLogout = () => {
+    Logout();
+    setLogado(false);
   };
 
-  const handleNewAccout = () => {
-    if (novoEmailCadastro && novaSenhaCadastro) {
-      Login(novoEmailCadastro, novaSenhaCadastro);
-      alert("Conta cadatrada com sucesso");
-    } else {
-      alert("Digite um email ou senha válidos");
-    }
-  };
+  const [flip, setFlipped] = useState(false);
 
   const Flipeed = (e) => {
     e.preventDefault();
@@ -49,6 +45,7 @@ const LoginPage = () => {
         >
           {!flip ? "Cadastre-se" : "Login"}
         </button>
+        <button onClick={HandleLogout}>Logout</button>
         <div
           className={`flex flex-wrap [transform-style:preserve-3d] transition-transform w-[480px] h-[450px] rounded-xl shadow-xl relative duration-700 ${
             flip ? "[transform:rotateY(180deg)] " : ""
@@ -66,18 +63,18 @@ const LoginPage = () => {
                 className="w-full h-10 text-black pl-2 rounded-xl mb-2 shadow-xl"
                 type="text"
                 placeholder="E-mail"
-                onChange={(e) => setNovoEmailLogin(e.target.value)}
-                value={novoEmailLogin}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
               <input
                 className="w-full h-10 text-black pl-2 rounded-xl mb-2 shadow-xl"
                 type="text"
                 placeholder="Senha"
-                value={novaSenhaLogin}
-                onChange={(e) => setNovaSenhaLogin(e.target.value)}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
               />
               <button
-                onClick={handleLogin}
+                onClick={HandleLogin}
                 className="bg-sky-700 w-full rounded-xl hover:bg-sky-600"
               >
                 Entrar
@@ -94,19 +91,19 @@ const LoginPage = () => {
                 text-black pl-2"
                 type="text"
                 placeholder="E-mail"
-                value={novoEmailCadastro}
-                onChange={(e) => setNovoEmailCadastro(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 className="w-full z-50 h-10 shadow-2xl rounded-xl mb-2
                 text-black pl-2"
                 type="text"
                 placeholder="Senha"
-                value={novaSenhaCadastro}
-                onChange={(e) => setNovaSenhaCadastro(e.target.value)}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
               />
               <button
-                onClick={handleNewAccout}
+                onClick={HandleNewAccount}
                 className="rounded-xl bg-sky-700  w-full shadow-xl hover:bg-sky-600"
               >
                 Cadastrar

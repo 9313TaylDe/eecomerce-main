@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
     setTimeout(1000000);
   });
 
-  const Login = (userEmail, userSenha) => {
+  const Login = async (userEmail, userSenha) => {
     if (userEmail && userSenha) {
       setEmail(userEmail);
       setSenha(userSenha);
@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
     setSenha("");
     setLogado(false);
     localStorage.removeItem("autentic");
+    setTimeout(1000);
     alert("Fazendo logout");
   };
   return (
